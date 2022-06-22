@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20220515161100-01" author="gabriel-bessa">
+        <modifyDataType tableName="tb_organization" columnName="description" newDataType="varchar(1000)"/>
+    </changeSet>
+    <changeSet id="20220515161100-02" author="gabriel-bessa">
+
+        <sql>
+            INSERT INTO trade.tb_organization (id, photo_url, name, description)
+            VALUES ((select nextval('trade."seq_organization"')), 'https://eco-trade.s3.amazonaws.com/organizations/cotasBrasil.png',
+                    'Instituto Costa Brasilis',
+                    'O foco do Instituto Costa Brasilis é o Gerenciamento Costeiro, através de um plano integrado de ações estratégicas, visando a preservação ambiental e a transformação social');
+            INSERT INTO trade.tb_organization (id, photo_url, name, description)
+            VALUES ((select nextval('trade."seq_organization"')), 'https://eco-trade.s3.amazonaws.com/organizations/lixoZero.png',
+                    'Instituto Lixo Zero Brasil',
+                    'Articular, Mobilizar e Provocar novas atitudes nas comunidades nacionais e internacionais promovendo a prática do Lixo Zero nos diversos segmentos da sociedade');
+            INSERT INTO trade.tb_organization (id, photo_url, name, description)
+            VALUES ((select nextval('trade."seq_organization"')), 'https://eco-trade.s3.amazonaws.com/organizations/ecotece.png',
+                    'Ecotece',
+                    'Missão de modificar as lógicas de produção e consumo, para que a moda possa se tornar mais ética, limpa e inclusiva.');
+            INSERT INTO trade.tb_organization (id, photo_url, name, description)
+            VALUES ((select nextval('trade."seq_organization"')), 'https://eco-trade.s3.amazonaws.com/organizations/regeneracaoGlobal.png',
+                    'Instituto Regeneração Global',
+                    'Missão de promover as soluções que contribuem para a regeneração do planeta e equilíbrio da sociedade. Fazemos parte de um movimento crescente no mundo que busca tornar realidade o desenvolvimento humano por meio de sistemas ambientalmente sustentáveis, socialmente justas e economicamente viáveis');
+            INSERT INTO trade.tb_organization (id, photo_url, name, description)
+            VALUES ((select nextval('trade."seq_organization"')), 'https://eco-trade.s3.amazonaws.com/organizations/greenPeace.png',
+                    'Greenpeace',
+                    'Missão de garantir a capacidade da Terra de nutrir a vida em toda a sua diversidade');
+            INSERT INTO trade.tb_organization (id, photo_url, name, description)
+            VALUES ((select nextval('trade."seq_organization"')), 'https://eco-trade.s3.amazonaws.com/organizations/renctas.png',
+                    'Renctas',
+                    'Promover a conservação da biodiversidade através do combate ao tráfico de animais silvestres');
+        </sql>
+
+    </changeSet>
+</databaseChangeLog>

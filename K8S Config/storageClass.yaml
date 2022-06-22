@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-azuredisk
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 32Gi
+  volumeName: pv-azuredisk
+  storageClassName: managed-csi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-azuredisk
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 32Gi
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: managed-csi
+  csi:
+    driver: disk.csi.azure.com
+    readOnly: false
+    volumeHandle: /subscriptions/773eb6b5-5589-4da0-8997-e0498ee6a08e/resourcegroups/MC_k8s-cluster_group_k8s-cluster_australiacentral/providers/Microsoft.Compute/disks/persistence-disl
+    volumeAttributes:
+      fsType: ext4

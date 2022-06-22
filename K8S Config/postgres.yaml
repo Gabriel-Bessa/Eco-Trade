@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-postgres
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+  selector:
+    name: deployment-postgres
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-postgres
+  labels:
+    name: deployment-postgres
+spec:
+  selector: 
+    matchLabels:
+      name: deployment-postgres
+  template:
+    metadata:
+      labels:
+        name: deployment-postgres
+    spec:
+      containers:
+        - name: db-postgres
+          image: postgres:13-alpine
+          imagePullPolicy: "IfNotPresent"
+          lifecycle:
+            postStart:
+              exec:
+                command: [ "/bin/bash","-c","sleep 20 && PGPASSWORD=$POSTGRES_PASSWORD psql $POSTGRES_DB -U $POSTGRES_USER -c \'CREATE SCHEMA IF NOT EXISTS chat;CREATE SCHEMA IF NOT EXISTS trade;\'" ]
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: name
+          ports:
+            - containerPort: 5432
+              name: postgres
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/storage/
+              name: postgres-persistance-storage
+      volumes:
+        - name: postgres-persistance-storage
+          persistentVolumeClaim:
+            claimName: pvc-azuredisk

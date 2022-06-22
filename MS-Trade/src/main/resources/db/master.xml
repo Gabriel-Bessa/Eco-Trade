@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+        <include file="db/changelog/20220319111500_add_user.xml" relativeToChangelogFile="false"/>
+        <include file="db/changelog/20220411194400_create_advertisement.xml" relativeToChangelogFile="false"/>
+        <include file="db/changelog/20220416111500_create_file_advertisement.xml" relativeToChangelogFile="false"/>
+        <include file="db/changelog/20220427212200_add_accepted_offer_advertisement.xml" relativeToChangelogFile="false"/>
+        <include file="db/changelog/20220508231200_add_user_infos.xml" relativeToChangelogFile="false"/>
+        <include file="db/changelog/20220514145600_add_donation_and_organization.xml" relativeToChangelogFile="false"/>
+        <include file="db/changelog/20220515154700_add_default_orgs.xml" relativeToChangelogFile="false"/>
+        <include file="db/changelog/20220519192800_add_default_user_img.xml" relativeToChangelogFile="false"/>
+        <include file="db/changelog/20220601193500_add_organization_link_and_an_user.xml" relativeToChangelogFile="false"/>
+</databaseChangeLog>

@@ -1,0 +1,30 @@
+spring:
+  cache:
+    type: redis
+  redis:
+    host: ${REDIS_URL}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
+  liquibase:
+    enabled: true
+    change-log: classpath:db/master.xml
+    default-schema: chat
+  datasource:
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
+server:
+  servlet:
+    context-path: /api/chat
+  port: 8081
+security:
+  basic:
+    enable: false
+ecotrade:
+  trade:
+    url: ${MS_TRADE_URL}
+secret:
+  key: ${SECRET_KEY}
+  time: 180000000
+  host:
+    time: ${SECRET_TIME}

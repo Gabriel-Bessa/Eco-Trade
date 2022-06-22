@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20220601193500-01" author="gabriel-bessa">
+        <sql>
+            INSERT INTO tb_user (id, email, name, birth_date, password) VALUES (999995, 'apresentacao@gmail.com', 'Apresentação', '2022-06-01', '$2a$10$cWT4QrhWq5QXRWYD2qASfeww5NjrVqWarEzp/5yjkSmwQ0qIZEgLq');
+            INSERT INTO tb_role (id, name) VALUES (999995, 'ROLE_USER');
+            INSERT INTO tb_user_roles (app_user_id, roles_id) VALUES (999995, 999995);
+        </sql>
+        <sql>
+            INSERT INTO trade.tb_file (id, url, name)
+            VALUES ('0e231df4-178e-41cb-9013-7c5d6b3ab201',
+                    'https://eco-trade.s3.amazonaws.com/bucket/c5aa119c-2211-49fc-9361-40a2b110c630.svg', 'user.svg');
+            INSERT INTO trade.tb_user_file (photo_url, user_id)
+            VALUES ('0e231df4-178e-41cb-9013-7c5d6b3ab201', 999995);
+        </sql>
+    </changeSet>
+    <changeSet id="20220601193500-02" author="gabriel-bessa">
+        <addColumn tableName="tb_organization">
+            <column name="link" type="varchar(200)"/>
+        </addColumn>
+        <sql>
+            UPDATE trade.tb_organization
+            SET link = 'http://costabrasilis.org.br/o-instituto/'
+            WHERE id = 1;
+
+            UPDATE trade.tb_organization
+            SET link = 'https://ilzb.org/quem-somos/'
+            WHERE id = 2;
+
+            UPDATE trade.tb_organization
+            SET link = 'http://ecotece.org.br/quem-somos/'
+            WHERE id = 3;
+
+            UPDATE trade.tb_organization
+            SET link = 'https://regeneracaoglobal.com/sobre-o-instituto#googtrans(pt)'
+            WHERE id = 4;
+
+            UPDATE trade.tb_organization
+            SET link = 'https://doe.greenpeace.org.br/Institucional/quem-somos'
+            WHERE id = 5;
+
+            UPDATE trade.tb_organization
+            SET link = 'https://renctas.org.br/o-que-fazemos/'
+            WHERE id = 6;
+        </sql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,34 @@
+spring:
+  cache:
+    type: redis
+  redis:
+    host: ${REDIS_URL}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
+  liquibase:
+    enabled: true
+    change-log: classpath:db/master.xml
+    default-schema: trade
+  datasource:
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
+  servlet:
+    multipart:
+      max-file-size: 3MB
+      max-request-size: 16MB
+server:
+  servlet:
+    context-path: /api/trade
+  port: 8080
+security:
+  basic:
+    enable: false
+secret:
+  key: ${SECRET_KEY}
+  time: 180000000
+aws:
+  region: ${BUCKET_REGION}
+  bucketName: ${BUCKET_NAME}
+  key: ${BUCKET_KEY}
+  secret: ${BUCKET_SECRET}

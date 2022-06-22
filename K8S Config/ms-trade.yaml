@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-ms-trade
+spec:
+  selector:
+    name: deployment-ms-trade
+  ports:
+    - port: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-ms-trade
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: deployment-ms-trade
+  template:
+    metadata:
+      labels:
+        name: deployment-ms-trade
+    spec:
+      containers:
+        - name: ms-trade
+          image: gabrielbessadev/ms-trade:1.1.21
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_URL
+              value: service-postgres
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: user
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
+            - name: DB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: database
+            - name: DEFAULT_SCHEMA
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: trade-schema
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-credentials
+                  key: password
+            - name: BUCKET_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: bucket-credentials
+                  key: region
+            - name: BUCKET_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: bucket-credentials
+                  key: bucket-name
+            - name: BUCKET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bucket-credentials
+                  key: key
+            - name: BUCKET_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: bucket-credentials
+                  key: secret
+            - name: SPRING_REDIS_HOST
+              value: service-redis
+            - name: SECRET_KEY
+              value: 7BC3D39388C9B
+            - name: ECO_POINTS_QUANTITY
+              valueFrom:
+                configMapKeyRef:
+                  name: eco-trade-config
+                  key: eco-points-quantity

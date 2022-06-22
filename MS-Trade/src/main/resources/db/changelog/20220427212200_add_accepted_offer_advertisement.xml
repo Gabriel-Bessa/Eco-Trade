@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20220427212200-01" author="gabriel-bessa">
+        <createSequence sequenceName="seq_advertisement"/>
+        <sql>
+            alter table tb_advertisement
+                add accepted_offer bigint;
+
+            alter table tb_advertisement
+                add constraint fk_advertisement_accepted_offer
+                    foreign key (accepted_offer) references tb_offer;
+        </sql>
+        <sql>
+            create table IF NOT EXISTS tb_offer_file
+            (
+                file_id varchar(100)
+                constraint fk_offer_file_file
+                references tb_file,
+                offer_id bigint
+                constraint fk_offer_file_offer
+                references tb_offer
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

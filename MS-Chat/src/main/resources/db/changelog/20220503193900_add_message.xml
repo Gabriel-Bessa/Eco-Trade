@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+        <changeSet id="20220503194000-01" author="gabriel-bessa">
+            <createTable tableName="tb_message">
+                <column name="id" type="varchar(50)">
+                    <constraints primaryKey="true"/>
+                </column>
+                <column name="send_at" type="datetime"/>
+                <column name="text" type="text"/>
+                <column name="user_target" type="bigint">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="user_source" type="bigint">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="advertisement_id" type="bigint">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="status" type="text(20)" defaultValue="'NOT_READY'"/>
+            </createTable>
+            <createSequence sequenceName="seq_message"/>
+        </changeSet>
+</databaseChangeLog>

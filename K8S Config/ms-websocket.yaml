@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-ms-websocket
+spec:
+  selector:
+    name: deployment-ms-websocket
+  ports:
+    - port: 8081
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-ms-websocket
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: deployment-ms-websocket
+  template:
+    metadata:
+      labels:
+        name: deployment-ms-websocket
+    spec:
+      containers:
+        - name: ms-websocket
+          image: gabrielbessadev/ms-websocket:1.0.10
+          ports:
+            - containerPort: 8081
+          env:
+            - name: DB_URL
+              value: service-postgres
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: user
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
+            - name: DB_DATABASE_CHAT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: database
+            - name: DEFAULT_SCHEMA_CHAT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: chat-schema
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-credentials
+                  key: password
+            - name: SPRING_REDIS_HOST
+              value: service-redis
+            - name: MS_URL_TRADE
+              value: service-ms-trade
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-ms-chat
+                  key: secret-key
+            - name: SECRET_HOST_TIME
+              valueFrom:
+                secretKeyRef:
+                  name: secret-ms-chat
+                  key: secret-time

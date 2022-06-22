@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20220411194500-01" author="gabriel-bessa">
+        <createSequence sequenceName="seq_advertisement"/>
+
+        <sql>
+            create table IF NOT EXISTS tb_advertisement
+            (
+                id                bigint       not null
+                    primary key,
+                title             varchar(255) not null,
+                product           varchar(255) not null,
+                trade_possibility varchar(255),
+                description       text,
+                category          text,
+                status            varchar(50),
+                advertiser_id     bigint
+                    constraint fk_advertisement_user
+                        references tb_user
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="20220411194500-02" author="gabriel-bessa">
+        <createSequence sequenceName="seq_offer"/>
+
+        <sql>
+            create table IF NOT EXISTS tb_offer
+            (
+                id               bigint       not null
+                    primary key,
+                product          varchar(255) not null,
+                description      varchar(255) not null,
+                status           varchar(50),
+                advertisement_id bigint
+                    constraint fk_advertisement_offer
+                        references tb_advertisement,
+                offerer_id       bigint
+                    constraint fk_advertisement_user
+                        references tb_user
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="20220411194500-03" author="gabriel-bessa">
+        <sql>
+            create table IF NOT EXISTS tb_file
+            (
+                id   varchar(100) not null
+                    primary key,
+                url  varchar(255),
+                name varchar(255)
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

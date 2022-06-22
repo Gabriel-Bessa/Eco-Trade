@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+        <changeSet id="20220319111500" author="gabriel-bessa">
+            <sql>
+                CREATE SEQUENCE IF NOT EXISTS seq_role;
+                CREATE SEQUENCE IF NOT EXISTS seq_user;
+
+                CREATE TABLE IF NOT EXISTS tb_role
+                (
+                    id bigint NOT NULL PRIMARY KEY,
+                    name VARCHAR(255)
+                );
+
+                CREATE TABLE IF NOT EXISTS tb_user
+                (
+                    id bigint NOT NULL PRIMARY KEY,
+                    email VARCHAR(255) UNIQUE,
+                    name VARCHAR(255),
+                    birth_date DATE,
+                    password VARCHAR(255)
+                );
+
+                CREATE TABLE IF NOT EXISTS tb_user_roles
+                (
+                    app_user_id bigint NOT NULL CONSTRAINT fk_userrole_user REFERENCES tb_user,
+                    roles_id bigint NOT NULL CONSTRAINT fk_userrole_role REFERENCES tb_role
+                );
+            </sql>
+            <sql>
+                INSERT INTO tb_user (id, email, name, birth_date, password) VALUES (999999, 'bessagabriel490@gmail.com', 'Gabriel Bessa', '2022-03-19', '$2a$10$egmPx7G9JfcTwPJJyb8tMOsg85P0rUXeGXj1phKdEJuv4R20/Ibom');
+                INSERT INTO tb_role (id, name) VALUES (999999, 'ROLE_MASTER');
+                INSERT INTO tb_user_roles (app_user_id, roles_id) VALUES (999999, 999999);
+            </sql>
+        </changeSet>
+
+</databaseChangeLog>

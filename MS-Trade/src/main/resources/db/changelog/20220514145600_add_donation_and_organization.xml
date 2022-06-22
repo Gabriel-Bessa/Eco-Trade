@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20220514145600-01" author="gabriel-bessa">
+        <createSequence sequenceName="seq_organization"/>
+        <createTable tableName="tb_organization">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="photo_url" type="varchar(100)" defaultValue="https://eco-trade.s3.amazonaws.com/organizations/green.png"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="description" type="varchar(255)"/>
+        </createTable>
+
+        <createSequence sequenceName="seq_donation"/>
+        <createTable tableName="tb_donation">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="quantity" type="double" defaultValue="0"/>
+            <column name="user_id" type="bigint"/>
+            <column name="organization_id" type="bigint"/>
+            <column name="realizated_day" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="tb_donation" baseColumnNames="user_id" constraintName="fk_donation_user" referencedTableName="tb_user"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="tb_donation" baseColumnNames="organization_id"
+                                 constraintName="fk_donation_organization" referencedTableName="tb_organization"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

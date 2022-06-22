@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-redis
+spec:
+  type: ClusterIP
+  ports:
+    - port: 6379
+  selector:
+    name: deployment-redis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-redis
+  labels:
+    name: deployment-redis
+spec:
+  selector:
+    matchLabels:
+      name: deployment-redis
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels: 
+        name: deployment-redis
+    spec:
+      containers:
+        - name: db-redis
+          image: redis:5-alpine
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-credentials
+                  key: password
+          ports:
+            - containerPort: 6379
+              name: redis
+          volumeMounts:
+            - mountPath: /var/lib/redis/data
+              name: redis-persistance-storage
+      volumes:
+        - name: redis-persistance-storage
+          persistentVolumeClaim:
+            claimName: pvc-azuredisk

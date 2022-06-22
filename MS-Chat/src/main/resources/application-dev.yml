@@ -1,0 +1,43 @@
+spring:
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 6379
+    password: cGFzc3dvcmQxMjMK
+  liquibase:
+    enabled: true
+    change-log: classpath:db/master.xml
+    default-schema: chat
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/eco-trade?currentSchema=chat
+  jpa:
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+server:
+  servlet:
+#    context-path: /api/chat
+  port: 8081
+security:
+  basic:
+    enable: false
+ecotrade:
+  trade:
+    url: http://localhost:8080/api/trade
+secret:
+  key: 7BC3D39388C9B
+  time: 180000000
+  host:
+    time: 15
+feign:
+  client:
+    config:
+      feignName:
+        requestInterceptors:
+          - com.ecotrade.mswebsocket.config.interceptors.FeignInterceptor

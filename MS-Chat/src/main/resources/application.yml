@@ -1,0 +1,32 @@
+spring:
+  cache:
+    type: redis
+  redis:
+    host: ${REDIS_URL}
+    port: 6379
+    password: ${REDIS_PASSWORD}
+  liquibase:
+    enabled: true
+    change-log: classpath:db/master.xml
+    default-schema: ${DEFAULT_SCHEMA_CHAT}
+  datasource:
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://${DB_URL}:5432/${DB_DATABASE_CHAT}?currentSchema=${DEFAULT_SCHEMA_CHAT}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+server:
+  servlet:
+    context-path: /api/chat
+  port: 8081
+secret:
+  key: ${SECRET_KEY}
+  time: 180000000
+  host:
+    time: ${SECRET_HOST_TIME}
+ecotrade:
+  trade:
+    url: ${MS_URL_TRADE}:8080/api/trade

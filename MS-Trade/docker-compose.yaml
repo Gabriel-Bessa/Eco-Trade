@@ -1,0 +1,19 @@
+version: '3'
+services:
+  DB:
+    container_name: DB
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 5432:5432
+  REDIS:
+    container_name: REDIS
+    image: redis:5-alpine
+    environment:
+      - ALLOW_EMPTY_PASSWORD=false
+      - REDIS_PASSWORD=cGFzc3dvcmQxMjMK
+    ports:
+      - 6379:6379

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20220508231100-01" author="gabriel-bessa">
+
+        <createTable tableName="tb_user_file">
+            <column name="photo_url" type="varchar(100)"/>
+            <column name="user_id" type="bigint"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="tb_user_file" baseColumnNames="photo_url" constraintName="fk_user_file"
+                                 referencedTableName="tb_file"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="tb_user_file" baseColumnNames="user_id" constraintName="fk_user_file_user" referencedTableName="tb_user"
+                                 referencedColumnNames="id"/>
+
+        <addColumn tableName="tb_user">
+            <column name="cep" type="varchar(50)"/>
+            <column name="address" type="varchar(150)"/>
+            <column name="phone" type="varchar(20)">
+                <constraints unique="true"/>
+            </column>
+            <column name="number" type="varchar(10)"/>
+            <column name="city" type="varchar(50)"/>
+            <column name="state" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

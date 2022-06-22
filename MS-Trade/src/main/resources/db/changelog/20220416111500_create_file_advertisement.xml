@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20220416111500-01" author="gabriel-bessa">
+        <createSequence sequenceName="seq_advertisement"/>
+
+        <sql>
+            create table IF NOT EXISTS tb_advertisement_file
+            (
+                file_id varchar(100)
+                    constraint fk_advertisement_file_file
+                        references tb_file,
+                advertiser_id bigint
+                    constraint fk_advertisement_file_advertiser
+                        references tb_advertisement
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

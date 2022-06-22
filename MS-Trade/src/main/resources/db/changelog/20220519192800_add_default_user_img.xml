@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20220519194900-01" author="gabriel-bessa">
+        <sql>
+            INSERT INTO trade.tb_file (id, url, name)
+            VALUES ('0e231df4-178e-41cb-9013-7c5d6b3ab203',
+                    'https://eco-trade.s3.amazonaws.com/bucket/c5aa119c-2211-49fc-9361-40a2b110c630.svg', 'user.svg');
+            INSERT INTO trade.tb_user_file (photo_url, user_id)
+            VALUES ('0e231df4-178e-41cb-9013-7c5d6b3ab203', 999999);
+        </sql>
+    </changeSet>
+</databaseChangeLog>

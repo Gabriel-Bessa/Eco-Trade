@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: eco-trade-config
+data:
+  eco-points-quantity: "300"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+data:
+  host: postgres
+  name: eco-trade
+  trade-schema: trade
+  chat-schema: chat
+  database: eco-trade
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-credentials
+data:
+  user: cG9zdGdyZXM=
+  password: cG9zdGdyZXM=
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: redis-credentials
+data:
+  password: cGFzc3dvcmQxMjMK
+type: Opaque
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: bucket-credentials
+data:
+  region: dXMtZWFzdC0x
+  bucket-name: ZWNvLXRyYWRl
+  key: QUtJQVlMV05TUURISlNaRDZCM0w=
+  secret: IFhpaGF1MjNIUW92b3phUmo2dTkvOFdvVnZRU0QxOFR5aitGbTgydjY=
+type: Opaque
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret-ms-chat
+data:
+  secret-key: NVVtR3N1QWpJSldEU0lYaA==
+  secret-time: MTU=
+type: Opaque
